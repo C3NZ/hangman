@@ -1,7 +1,7 @@
 # Problem Set 2, hangman.py
-# Name: 
-# Collaborators:
-# Time spent:
+# Name: Vincenzo Marcella
+# Collaborators: Me, myself, and I.
+# Time spent: 1/0 hours
 
 # Hangman Game
 # -----------------------------------
@@ -9,6 +9,12 @@
 # You don't need to understand this helper code,
 # but you will have to know how to use the functions
 # (so be sure to read the docstrings!)
+
+#DISCLAIMER
+#The helper functions and some of the documenation was provided by MIT OCW.
+#I have licensed the software under the GPLv3 which is compatible with
+#the Creative commons license and can be found in this repository
+
 import random
 import string
 
@@ -32,8 +38,6 @@ def load_words():
     print("  ", len(wordlist), "words loaded.")
     return wordlist
 
-
-
 def choose_word(wordlist):
     """
     wordlist (list): list of words (strings)
@@ -49,7 +53,6 @@ def choose_word(wordlist):
 # Load the list of words into the variable wordlist
 # so that it can be accessed from anywhere in the program
 wordlist = load_words()
-
 
 def is_word_guessed(secret_word, letters_guessed):
     '''
@@ -77,9 +80,6 @@ def is_word_guessed(secret_word, letters_guessed):
 
     return False
 
-
-
-
 def get_guessed_word(secret_word, letters_guessed):
     '''
     secret_word: string, the word the user is guessing
@@ -100,7 +100,6 @@ def get_guessed_word(secret_word, letters_guessed):
                 guessed_word[i] = secret_word[i]
 
         return "".join(guessed_word)
-
 
 def get_available_letters(letters_guessed):
     '''
@@ -232,8 +231,6 @@ def hangman(secret_word):
 
 # -----------------------------------
 
-
-
 def match_with_gaps(my_word, other_word):
     '''
     my_word: string with _ characters, current guess of secret word
@@ -256,8 +253,6 @@ def match_with_gaps(my_word, other_word):
             return False
 
     return True
-
-
 
 def show_possible_matches(my_word):
     '''
@@ -284,8 +279,6 @@ def show_possible_matches(my_word):
         print("No matches found")
     else:
         print("\nHere are some Possible matches:\n" + " ".join(possible_matches) + '\n')
-
-
 
 def hangman_with_hints(secret_word):
     '''
@@ -400,7 +393,6 @@ def hangman_with_hints(secret_word):
                 print("The correct word was: " + secret_word + '\n')
         
         print("-----------")
-
 
 if __name__ == "__main__":
 
