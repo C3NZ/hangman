@@ -67,11 +67,6 @@ def is_word_guessed(secret_word, letters_guessed):
     correct_letters_needed = len(secret_word)
     correct_letters = 0
 
-    #Iterate through all the letters the user has guessed 
-    #and count the amount of times each letters appears 
-    #in the secret word. You can determine that the word is
-    #guessed when the sum of the appearances of characters guessed by the user
-    #in the secret_word string is equal to the length of the secret word
     for letter in letters_guessed:        
         correct_letters += secret_word.count(letter)
             
@@ -171,7 +166,6 @@ def hangman(secret_word):
        #Force the user to provide correct input if they didn't already
         while guess not in available_letters or len(guess) != 1:      
             
-            #Punish the user for not entering 
             if guess not in string.ascii_lowercase:
                 print("\nYou entered something other than a letter!")
                 
@@ -183,21 +177,16 @@ def hangman(secret_word):
                     print("you have", warnings, "warnings left")
                 
                 if num_guesses == 0:
-                    break   
-                    
+                    break             
             else:
                 print("\nThat guess is either too long or has been used already!\n")
 
-            #Get the users input and try again
             guess = str(input("Enter your next guess:")).lower()
-       
-
-        #Add the guessed letter to the list and then remove it
-        #from available characters
+        
+        #Update available letters after each guess
         letters_guessed.append(guess)
         available_letters = get_available_letters(letters_guessed)
 
-        #Act on whether the user guessed the word correctly or not
         if guess in secret_word:
             
             print("\nCongrats, you've guessed a correct character!\n")
@@ -240,14 +229,15 @@ def match_with_gaps(my_word, other_word):
         _ , and my_word and other_word are of the same length;
         False otherwise: 
     '''
-
+    
+    #Remove all spaces to shorten the hangman word
     my_word = my_word.replace(' ', '')
     
     #if the length of the words do not match then neither can the words
     if len(my_word) != len(other_word):
         return False
 
-    #compare the word we've guessed so far to another word
+    #compare every char in my_word to every char in other_word
     for i in range(len(my_word)):
         if my_word[i] != other_word[i] and (my_word[i] != '_' or other_word[i] in my_word):
             return False
@@ -265,16 +255,12 @@ def show_possible_matches(my_word):
 
     '''
     
-    #List that will contain all possible matches
     possible_matches = []
     
-    #Iterate through every word in our word list and run it through
-    #our match_with_gaps functions to find potential matches
     for word in wordlist:
         if match_with_gaps(my_word, word):
             possible_matches.append(word)
 
-    #Print out the result after evaulating all words in the wordlist
     if len(possible_matches) == 0:
         print("No matches found")
     else:
@@ -330,18 +316,15 @@ def hangman_with_hints(secret_word):
         
         guess = input("Enter your next guess:").lower()
         
-        #only enter loop if the user didn't provide the correct input
         while (guess not in available_letters and guess != '*') or len(guess) != 1 :      
             
-            #Determine the output to show based on 
             if guess not in string.ascii_lowercase:
                 print("\nYou entered something other than a letter!")
             elif len(guess) > 1:
                 print("\nYou entered more than one character as a guess!")
             else:
                 print("\nThat character has been used already!\n")
-
-            #Penalize the user for breaking the rules of the game
+                
             if warnings == 0:
                 num_guesses -= 1
                 print("You have", num_guesses, "of guesses left\n")
@@ -354,8 +337,6 @@ def hangman_with_hints(secret_word):
 
             guess = str(input("Enter your next guess:")).lower()
         
-       
-        #checks whether or not if the user used the hint key or made an actual guess
         if guess == '*':
             show_possible_matches(get_guessed_word(secret_word, letters_guessed))
             continue    
@@ -364,12 +345,9 @@ def hangman_with_hints(secret_word):
             available_letters = get_available_letters(letters_guessed)
         
         
-        #Act on whether the user has guessed a correct letter or not
-        if guess in secret_word:
-            
+        if guess in secret_word: 
             print("\nCongrats, you've guessed a correct character!\n")
             
-            #Check to see if all letters have been guessed
             if is_word_guessed(secret_word, letters_guessed):
 
                 print("Congratulations, you won! The word was: " + secret_word + '\n')
@@ -378,9 +356,9 @@ def hangman_with_hints(secret_word):
 
         else:
             
+            #Penalize the user for guessing the wrong consonant or vowel
             print("\nThat letter is not in the secret word!\n")
-            
-            #Determine how many guesses the user loses for an incorrect guess
+        
             if guess in 'aeiou':
                 num_guesses -= 2
             else:
